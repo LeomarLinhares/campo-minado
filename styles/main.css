@@ -1,0 +1,43 @@
+.app {
+    display: flex;
+    flex-direction: row;
+}
+
+main {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    width: 85%;
+    max-width: 85%;
+}
+
+.mainBox {
+    display: flex;
+    flex-direction: row;
+
+    max-height: 90vh;
+    max-width: 90%;
+
+    overflow: auto;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.block {
+    border-radius: 2px;
+    background: #dfdfdf;
+    border: none;
+
+    padding: .6rem;
+    margin: .1rem;
+
+    cursor: pointer;
+}
+
+.block:hover {
+    background: #c9c9c9;
+}
