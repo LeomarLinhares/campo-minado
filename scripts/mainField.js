@@ -71,18 +71,33 @@ function revealBlock(column, line) {
 }
 
 function numberOfBombsAround(column, line) {
+    let selectedBlock = document.getElementById(`${column}-${line}`);
     let numberOfBombsAround = 0;
     let fieldsAround = {
-        topLeft  : [column--, line--],
-        top      : [column, line--],
-        topRight : [column++, line--],
+        topLeft  : [column - 1, line - 1],
+        top      : [column,     line - 1],
+        topRight : [column + 1, line - 1],
     
-        left     : [column--, line],
-        right    : [column++, line],
+        left     : [column - 1, line],
+        right    : [column + 1, line],
     
-        botLeft  : [column--, line++],
-        bot      : [column, line++],
-        botRight : [column++, line++]
+        botLeft  : [column - 1, line + 1],
+        bot      : [column,     line + 1],
+        botRight : [column + 1, line + 1]
     }
     
+    for (const key in fieldsAround) {
+        for (let index = 0; index < arrField.length; index++) {
+            const element = arrField[index];
+            if (element.coord.toString() === fieldsAround[key].toString()) {
+                if (element.isABomb) {
+                    numberOfBombsAround += 1;
+                }
+            }
+        }
+    }
+
+    selectedBlock.innerHTML = numberOfBombsAround;
+    console.log(numberOfBombsAround)
+    return numberOfBombsAround;
 }
