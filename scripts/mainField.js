@@ -9,6 +9,7 @@ function startGame() {
 
     mainBox.innerHTML = '';
     usedFields = [];
+    arrField = [];
 
     let inputLines = document.querySelector('#lines').value;
     let inputColumns = document.querySelector('#columns').value;
