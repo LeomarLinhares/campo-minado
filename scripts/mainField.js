@@ -61,16 +61,9 @@ function revealBlock(column, line) {
     }
 
     if (!isThisAUsedField) {
-        for (let index = 0; index < arrField.length; index++) {
-            const element = arrField[index];
-            const elCoord = element.coord;
-            
-            if (elCoord.toString() == [column, line].toString()) {
-                selectedBlock = element;
-            }
-        }
+        arrField.map(element => element.coord.toString() === [column, line].toString() ? selectedBlock = element : undefined);
+        const inScopeSelectedBlock = document.getElementById(`${selectedBlock.coord[0]}-${selectedBlock.coord[1]}`)
         
-        let inScopeSelectedBlock = document.getElementById(`${selectedBlock.coord[0]}-${selectedBlock.coord[1]}`)
         if (selectedBlock.isABomb) {
             console.error('IS A BOMB!')
             inScopeSelectedBlock.innerHTML = '*';
@@ -84,11 +77,11 @@ function revealBlock(column, line) {
 }
 
 function numberOfBombsAround(column, line) {
-    let inScopeSelectedBlock = document.getElementById(`${selectedBlock.coord[0]}-${selectedBlock.coord[1]}`);
-    let isInside = column > 0 && line > 0 && column <= globalColumns && line <= globalLines;
+    const inScopeSelectedBlock = document.getElementById(`${selectedBlock.coord[0]}-${selectedBlock.coord[1]}`);
+    const isInside = column > 0 && line > 0 && column <= globalColumns && line <= globalLines;
 
-    let responseHaveBombsAround = haveBombsAround(column, line);
-    let quantityOfBombs = responseHaveBombsAround.numberOfBombs;
+    const responseHaveBombsAround = haveBombsAround(column, line);
+    const quantityOfBombs = responseHaveBombsAround.numberOfBombs;
 
     if (isInside) {
         usedFields.push(`${column}-${line}`);
@@ -105,7 +98,7 @@ function numberOfBombsAround(column, line) {
 
 function haveBombsAround(column, line) {
     let numberOfBombs = 0;
-    let fieldsAround = {
+    const fieldsAround = {
         topLeft  : [column - 1, line - 1],
         top      : [column,     line - 1],
         topRight : [column + 1, line - 1],
@@ -119,25 +112,14 @@ function haveBombsAround(column, line) {
     }
 
     for (const key in fieldsAround) {
-        for (let index = 0; index < arrField.length; index++) {
-            const element = arrField[index];
+        arrField.map(element => {
             if (element.coord.toString() === fieldsAround[key].toString() && element.isABomb) {
                 numberOfBombs += 1;
             }
-        }
+        })
     }
 
-    if (numberOfBombs > 0) {
-        return {
-            numberOfBombs,
-            fieldsAround
-        };
-    } else if (numberOfBombs === 0) {
-        return {
-            numberOfBombs,
-            fieldsAround
-        };
-    }
+    return { numberOfBombs, fieldsAround };
 }
 
 function noBombs(receivedFields) {
