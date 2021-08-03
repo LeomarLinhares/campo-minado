@@ -19,10 +19,10 @@
             </div>
             <div>
                 <label for="lines">Linhas</label>
-                <input type="number" name="lines" id="lines">
+                <input type="number" name="lines" id="lines" min="5" max="30">
 
                 <label for="columns">Colunas</label>
-                <input type="number" name="columns" id="columns">
+                <input type="number" name="columns" id="columns" min="5" max="30">
 
                 <button class="btnStart" onclick="startGame()">Start</button>
             </div>
@@ -34,7 +34,7 @@
         
         <main>
             <div class="mainBox">
-
+                <span>Defina as dimensões do campo para iniciar (Min.: 5; Max.:30)</span>
             </div>
         </main>
     </div>

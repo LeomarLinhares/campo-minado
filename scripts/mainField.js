@@ -5,7 +5,7 @@ let globalColumns = 0;
 let selectedBlock;
 
 function startGame() {
-    let mainBox = document.querySelector('.mainBox');
+    const mainBox = document.querySelector('.mainBox');
 
     mainBox.innerHTML = '';
     usedFields = [];
@@ -13,6 +13,11 @@ function startGame() {
 
     let inputLines = document.querySelector('#lines').value;
     let inputColumns = document.querySelector('#columns').value;
+    if (inputLines > 30 || inputLines < 5 || inputColumns > 30 || inputColumns < 5) {
+        mainBox.innerHTML = '<span>Defina as dimensões do campo para iniciar (Min.: 5; Max.:30)</span>';
+        alert('Defina um campo com dimensões válidas. Deve ser entre 5 e 30.');
+        return;
+    }
 
     for (let createdColumns = 0; createdColumns < inputColumns; createdColumns += 1) {
         let column = document.createElement('div');
@@ -45,20 +50,13 @@ function startGame() {
             globalLines = createdLines + 1;
         }
         mainBox.appendChild(column);
-    
         globalColumns = createdColumns + 1;
     }
 }
 
 function revealBlock(column, line) {
     let isThisAUsedField = false;
-
-    for (let index = 0; index < usedFields.length; index += 1) {
-        const element = usedFields[index];
-        if (element === `${column}-${line}`) {
-            isThisAUsedField = true;
-        }
-    }
+    usedFields.map(element => element === `${column}-${line}` ? isThisAUsedField = true : isThisAUsedField = false);
 
     if (!isThisAUsedField) {
         arrField.map(element => element.coord.toString() === [column, line].toString() ? selectedBlock = element : undefined);
@@ -93,7 +91,6 @@ function numberOfBombsAround(column, line) {
             noBombs(responseHaveBombsAround.fieldsAround);
         }
     }
-
     return quantityOfBombs;
 }
 
@@ -119,7 +116,6 @@ function haveBombsAround(column, line) {
             }
         })
     }
-
     return { numberOfBombs, fieldsAround };
 }
 
