@@ -31,6 +31,7 @@ main {
     border-radius: 2px;
     background: #dfdfdf;
     border: none;
+    font-weight: 700;
 
     width: 1.2rem;
     height: 1.2rem;
@@ -43,3 +44,36 @@ main {
 .block:hover {
     background: #c9c9c9;
 }
+
+.numOfBombs1 {
+    color: #221786;
+}
+
+.numOfBombs2 {
+    color: #326133;
+}
+
+.numOfBombs3 {
+    color: #594d0a;
+}
+
+.numOfBombs4 {
+    color: #b12020;
+}
+
+.numOfBombs5 {
+    color: #a20300;
+}
+
+.numOfBombs6 {
+    color: #7e0000;
+}
+
+.numOfBombs7 {
+    color: #3d0000;
+}
+
+.numOfBombs8 {
+    color: #160000;
+}
+

@@ -14,15 +14,15 @@ function startGame() {
     let inputLines = document.querySelector('#lines').value;
     let inputColumns = document.querySelector('#columns').value;
 
-    for (let createdColumns = 0; createdColumns < inputColumns; createdColumns++) {
+    for (let createdColumns = 0; createdColumns < inputColumns; createdColumns += 1) {
         let column = document.createElement('div');
     
         column.setAttribute('class', 'column');
         column.setAttribute('id', `${createdColumns}`)
 
-        for (let createdLines = 0; createdLines < inputLines; createdLines++) {
+        for (let createdLines = 0; createdLines < inputLines; createdLines += 1) {
             // System
-            let objectBlock = {};
+            const objectBlock = {};
             objectBlock.coord = [createdColumns + 1, createdLines + 1];
             
             if (Math.random() * 100 < 20) {
@@ -34,7 +34,7 @@ function startGame() {
             arrField.push(objectBlock);
     
             // Visual
-            let lineBtn = document.createElement('button');
+            const lineBtn = document.createElement('button');
     
             lineBtn.setAttribute('class', 'block');
             lineBtn.setAttribute('id', `${createdColumns + 1}-${createdLines + 1}`);
@@ -53,7 +53,7 @@ function startGame() {
 function revealBlock(column, line) {
     let isThisAUsedField = false;
 
-    for (let index = 0; index < usedFields.length; index++) {
+    for (let index = 0; index < usedFields.length; index += 1) {
         const element = usedFields[index];
         if (element === `${column}-${line}`) {
             isThisAUsedField = true;
@@ -63,7 +63,7 @@ function revealBlock(column, line) {
     if (!isThisAUsedField) {
         arrField.map(element => element.coord.toString() === [column, line].toString() ? selectedBlock = element : undefined);
         const inScopeSelectedBlock = document.getElementById(`${selectedBlock.coord[0]}-${selectedBlock.coord[1]}`)
-        
+
         if (selectedBlock.isABomb) {
             console.error('IS A BOMB!')
             inScopeSelectedBlock.innerHTML = '*';
@@ -85,7 +85,8 @@ function numberOfBombsAround(column, line) {
 
     if (isInside) {
         usedFields.push(`${column}-${line}`);
-        inScopeSelectedBlock.innerHTML = quantityOfBombs;
+        quantityOfBombs ? inScopeSelectedBlock.innerHTML = quantityOfBombs : inScopeSelectedBlock.innerHTML = '';
+        inScopeSelectedBlock.classList.add(`numOfBombs${quantityOfBombs}`);
         inScopeSelectedBlock.style.backgroundColor = '#a9a9a9';
     
         if (!responseHaveBombsAround.numberOfBombs) {
