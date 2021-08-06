@@ -19,15 +19,15 @@ function startGame() {
         return;
     }
 
-    for (let createdColumns = 0; createdColumns < inputColumns; createdColumns += 1) {
+    for (let createdColumns = 0; createdColumns < inputColumns; createdColumns++) {
         let column = document.createElement('div');
     
         column.setAttribute('class', 'column');
         column.setAttribute('id', `${createdColumns}`)
 
-        for (let createdLines = 0; createdLines < inputLines; createdLines += 1) {
+        for (let createdLines = 0; createdLines < inputLines; createdLines++) {
             // System
-            const objectBlock = {};
+            let objectBlock = {};
             objectBlock.coord = [createdColumns + 1, createdLines + 1];
             
             if (Math.random() * 100 < 20) {
@@ -39,7 +39,7 @@ function startGame() {
             arrField.push(objectBlock);
     
             // Visual
-            const lineBtn = document.createElement('button');
+            let lineBtn = document.createElement('button');
     
             lineBtn.setAttribute('class', 'block');
             lineBtn.setAttribute('id', `${createdColumns + 1}-${createdLines + 1}`);
@@ -56,20 +56,26 @@ function startGame() {
 
 function revealBlock(column, line) {
     let isThisAUsedField = false;
-    usedFields.map(element => element === `${column}-${line}` ? isThisAUsedField = true : isThisAUsedField = false);
+
+    for (let index = 0; index < usedFields.length; index++) {
+        const element = usedFields[index];
+        if (element === `${column}-${line}`) {
+            isThisAUsedField = true;
+        }
+    }
 
     if (!isThisAUsedField) {
-        arrField.map(element => element.coord.toString() === [column, line].toString() ? selectedBlock = element : undefined);
+        arrField.forEach(element => element.coord.toString() === [column, line].toString() ? selectedBlock = element : undefined);
         const inScopeSelectedBlock = document.getElementById(`${selectedBlock.coord[0]}-${selectedBlock.coord[1]}`)
-
+        
         if (selectedBlock.isABomb) {
             console.error('IS A BOMB!')
             inScopeSelectedBlock.innerHTML = '*';
             inScopeSelectedBlock.style.backgroundColor = 'red';
             usedFields.push(`${column}-${line}`);
         } else {
-            console.log(selectedBlock)
-            numberOfBombsAround(column, line)
+            console.log(selectedBlock);
+            numberOfBombsAround(column, line);
         }
     }
 }
@@ -110,7 +116,7 @@ function haveBombsAround(column, line) {
     }
 
     for (const key in fieldsAround) {
-        arrField.map(element => {
+        arrField.forEach(element => {
             if (element.coord.toString() === fieldsAround[key].toString() && element.isABomb) {
                 numberOfBombs += 1;
             }
